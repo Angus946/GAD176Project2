@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,32 +13,69 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float Height = 2f;
     [SerializeField]
-    private float Width = .5f;
+    private float Width = .3f;
 
     [Header("Grounded Check")]
     public LayerMask GroundedLayerMask = ~0;
-    private float buffer = .5f;
-    private float radiusBuffer = .05f;
+    [SerializeField]
+    private float buffer = .8f;
+    [SerializeField]
+    public float radiusBuffer = .02f;
+    [SerializeField]
+    private bool isGrounded = true;
+    [SerializeField]
+    private float slopeLimit = 60f;
 
     [Header("Movement")]
-    public float maxSpeed => isSprinting ? sprintSpeed : defaultSpeed;
     [SerializeField]
-    private float defaultSpeed = 100f;
+    private float defaultSpeed = 15f;
+    public float maxSpeed
+    {
+        get
+        {
+            if (isGrounded)
+            {
+               return isSprinting? sprintSpeed : defaultSpeed;
+            }
+            else
+            {
+                return airControl ? airControlSpeed : 0f;
+            }
+        }
+    }
     [SerializeField]
-    private float sprintSpeed = 130f;
+    private float sprintSpeed = 20f;
     [SerializeField]
     private bool isSprinting { get; set; }
     [SerializeField]
-    private bool isSprintToggle;
+    private bool isAutoSprint;
+    //[SerializeField]
+    private bool canSprint;
     [SerializeField]
-    private bool isSprintPossible;
-    [SerializeField]
-    private float crouchSpeed = 70f;
+    private float crouchSpeed = 10f;
     [SerializeField]
     private bool isCrouching;
 
+    [Header("Jumping")]
     [SerializeField]
-    private bool isGrounded = true;
+    private bool canJump = true;
+    [SerializeField]
+    private bool isJumping = false;
+    [SerializeField]
+    private float jumpVelocity = 20;
+    [SerializeField]
+    private float jumpTime = 0.1f;
+    private float jumpTimeRemaining;
+
+    
+
+    [Header("Falling")]
+    [SerializeField]
+    private float fallVel = 10f;
+    [SerializeField]
+    private bool airControl;
+    [SerializeField]
+    private float airControlSpeed = 10f;
 
     [SerializeField]
     private Transform cameraTransform;
@@ -95,12 +133,13 @@ public class PlayerMovement : MonoBehaviour
     {
         // get and set value of pressed input into the cache
         jumpInput = value.isPressed;
+        Debug.Log("jump pressed? "+ value.ToString());
     }
     private void OnSprint(InputValue value)
     {
         // get and set value of pressed input into the cache
         sprintInput = value.isPressed;
-        Debug.Log(value.ToString());
+        Debug.Log("sprint pressed? " + value.ToString());
     }
 
     // void returns an input value for the "Primary Action" input
@@ -122,6 +161,8 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         PlayerInput = GetComponent<PlayerInput>();
         moveAction = PlayerInput.actions.FindAction("Move");
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void OnEnable()
@@ -151,20 +192,34 @@ public class PlayerMovement : MonoBehaviour
     }
     private void UpdateSprinting()
     {
-        if (sprintInput)
+        if (!isAutoSprint)
         {
-            isSprinting = true;
+            if (sprintInput)
+            {
+                isSprinting = true;
+            }
+            else
+            {
+                isSprinting = false;
+            }
         }
         else
         {
-            isSprinting = false;
+            if (!sprintInput)
+            {
+                isSprinting = true;
+            }
+            else
+            {
+                isSprinting = false;
+            }
         }
     }
 
     private RaycastHit UpdateIsGrounded()
     {
         Vector3 startPos = rb.position + Vector3.up * Height * 0.5f;
-        float groundCheckDistance = (Height *0.5f) + buffer;
+        float groundCheckDistance = (Height * 0.5f) + buffer;
 
         // perform sphere cast
         RaycastHit hitResult;
@@ -186,16 +241,67 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movementVector = (transform.forward * moveInput.y + transform.right * moveInput.x) * maxSpeed * Time.deltaTime;
         movementVector *= maxSpeed;
 
+        // are we on the ground?
         if (isGrounded)
         {
             // project onto floor surface 
             movementVector = Vector3.ProjectOnPlane(movementVector, groundCheckResult.normal);
+
+            // stop movement on steep slope
+            if (movementVector.y > 0 && Vector3.Angle(Vector3.up, groundCheckResult.normal) > slopeLimit)
+            {
+                //movementVector = Vector3.zero;
+            }
+        } 
+        else if (!isGrounded && ! isJumping)
+        {
+            movementVector += Vector3.down * fallVel;
         }
+
+        bool frameTriggered = false;
+        if (jumpInput)
+        {
+            if (isGrounded)
+            {
+                Debug.Log("Trigger Jump Check passed");
+                isJumping = true;
+                jumpTimeRemaining = jumpTime;
+                frameTriggered = true;
+            }
+
+            
+        }
+
+        if (isJumping)
+        {
+            // reduce jump time if not jumping this frame
+            if (!frameTriggered)
+            {
+                jumpTimeRemaining -= Time.deltaTime;
+                Debug.Log("not the frame jump is triggered");
+            }
+
+            // Jump finished
+            if (jumpTimeRemaining <= 0)
+            {
+                isJumping = false;
+                Debug.Log("Not jumping anymore");
+            }
+            else
+            {
+                movementVector.y += jumpVelocity;
+                Debug.Log("Jump Velocity added to movement vector");
+            }
+        }
+
+        // apply movement vector to rigid body velocity
         rb.linearVelocity = movementVector;
 
-        Debug.Log(isGrounded);
-        Debug.Log("Sprinting " + isSprinting);
-        Debug.Log(movementVector);
+        Debug.Log(jumpTimeRemaining);
+        Debug.Log("Jump Triggered this frame? " + frameTriggered);
+        Debug.Log("grounded " + isGrounded);
+       /* Debug.Log("Sprinting " + isSprinting);
+        Debug.Log(movementVector);*/
     }
     #endregion
 }
