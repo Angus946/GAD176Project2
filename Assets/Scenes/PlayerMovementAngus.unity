@@ -727,22 +727,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcaf4b8c9f00d6f42a1dd8d06baae3ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crouchSpeed: 10
+  isCrouching: 0
+  crouchHeight: 1
+  crouchBuffer: 0.4
+  playerCollider: {fileID: 0}
   rb: {fileID: 0}
-  Height: 2
   Width: 0.3
   GroundedLayerMask:
     serializedVersion: 2
     m_Bits: 17
-  buffer: 0.8
   radiusBuffer: 0.02
   isGrounded: 1
   slopeLimit: 60
   defaultSpeed: 15
   sprintSpeed: 20
   isAutoSprint: 0
-  crouchSpeed: 10
-  isCrouching: 0
-  canJump: 0
+  canJump: 1
   isJumping: 0
   jumpVelocity: 20
   jumpTime: 0.1
@@ -755,7 +756,7 @@ MonoBehaviour:
     m_Name: Move
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 1b61fa4a-ce0b-43c9-8ab1-5ada6a4f041c
+    m_Id: 290deea7-432d-4424-b479-179300ae51e6
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []

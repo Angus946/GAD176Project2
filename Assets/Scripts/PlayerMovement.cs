@@ -4,21 +4,38 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    #region Angus Variables
+
+    [SerializeField]
+    private float crouchSpeed = 10f;
+    [SerializeField]
+    private bool isCrouching = false;   
+    private bool isToggleCrouch;
+    [SerializeField]
+    private float crouchHeight = 1f;
+    [SerializeField]
+    private float crouchBuffer = 0.4f;
+
+    [SerializeField]
+    private CapsuleCollider playerCollider;
+
+    #endregion
+
+
     #region Iain McManus's player movement script
     // region segmenting for readability
     #region Declaring Variables
     [Header("Character")]
     [SerializeField]
     private Rigidbody rb;
-    [SerializeField]
-    private float Height = 2f;
+    private float Height => isCrouching ? crouchHeight: 2f;
     [SerializeField]
     private float Width = .3f;
 
     [Header("Grounded Check")]
     public LayerMask GroundedLayerMask = ~0;
     [SerializeField]
-    private float buffer = .8f;
+    private float buffer => isCrouching ? crouchBuffer : .8f;
     [SerializeField]
     public float radiusBuffer = .02f;
     [SerializeField]
@@ -35,7 +52,21 @@ public class PlayerMovement : MonoBehaviour
         {
             if (isGrounded)
             {
-               return isSprinting? sprintSpeed : defaultSpeed;
+                if (!isSprinting)
+                {
+                    if (!isCrouching)
+                    {
+                        return defaultSpeed;
+                    }
+                    else
+                    {
+                        return crouchSpeed;
+                    }
+                }
+                else
+                {
+                    return sprintSpeed;
+                }
             }
             else
             {
@@ -51,10 +82,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isAutoSprint;
     //[SerializeField]
     private bool canSprint;
-    [SerializeField]
-    private float crouchSpeed = 10f;
-    [SerializeField]
-    private bool isCrouching;
+    
 
     [Header("Jumping")]
     [SerializeField]
@@ -73,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float fallVel = 10f;
     [SerializeField]
-    private bool airControl;
+    private bool airControl = true;
     [SerializeField]
     private float airControlSpeed = 10f;
 
@@ -110,6 +138,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 lookInput;
     private bool jumpInput;
     private bool sprintInput;
+    private bool crouchInput;
     private bool primaryInput;
     private bool secondaryInput;
 
@@ -142,6 +171,13 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("sprint pressed? " + value.ToString());
     }
 
+    private void OnCrouch(InputValue value)
+    {
+        // get and set value of pressed input into the cache
+        crouchInput = value.isPressed;
+        Debug.Log("crouch pressed? " + value.ToString());
+    }
+
     // void returns an input value for the "Primary Action" input
     private void OnPrimary (InputValue value)
     {
@@ -162,6 +198,8 @@ public class PlayerMovement : MonoBehaviour
         PlayerInput = GetComponent<PlayerInput>();
         moveAction = PlayerInput.actions.FindAction("Move");
 
+        playerCollider = GetComponent<CapsuleCollider>();
+
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -177,6 +215,8 @@ public class PlayerMovement : MonoBehaviour
         UpdateSprinting();
 
         UpdateMovement(groundCheckResult);
+
+        UpdateCrouching();
     }
 
     
@@ -303,5 +343,54 @@ public class PlayerMovement : MonoBehaviour
        /* Debug.Log("Sprinting " + isSprinting);
         Debug.Log(movementVector);*/
     }
+    #endregion
+
+    #region Angus programming
+    private void UpdateCrouching()
+    {
+
+        if (!isToggleCrouch)
+        {
+            if (crouchInput)
+            {
+                isCrouching = true;
+            }
+            else
+            {
+                isCrouching = false;
+            }
+
+            if (isCrouching)
+            {
+                // adjust the collider to allow the player to hide
+                playerCollider.height = 1f;
+            }
+            else
+            {
+                playerCollider.height = 2f;
+            }
+        }
+        /*else
+        {
+            if (crouchInput)
+            {
+                isCrouching = !isCrouching;
+                if (isCrouching)
+                {
+                    isCrouching = false;
+                    playerCollider.height = 2f;
+
+                    return;
+                }
+                else if (crouchInput)
+                {
+                    isCrouching = true;
+                    playerCollider.height = 1f;
+                }
+                
+            }
+        }*/
+    }
+
     #endregion
 }
