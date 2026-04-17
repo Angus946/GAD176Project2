@@ -4,52 +4,43 @@ using UnityEngine.InputSystem;
 
 public class EventAlarm : MonoBehaviour
 {
-    public bool isalarmEnabled = false;
 
-    public delegate void AlarmDelegate();
-    public AlarmDelegate onEventTriggered;
+   public GameObject alarmManager;
+
 
     PlayerInput playerInput;
     public bool alarmTest;
-    public InputAction AlarmTest;
     protected void OnAlarmTest(InputValue value)
     {
+        alarmTest = value.isPressed;
         Debug.Log("input Value " + value.isPressed); 
+
+        if (alarmTest && value.isPressed)
+        {
+            alarmTest = !value.isPressed;
+        }
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+
+        Debug.Log(collision.collider.tag + " entered collider");
+       if (collision.collider.CompareTag("Player") == true)
+        {
+            Debug.Log("player is in alarm zone");
+            if (alarmManager != null)
+            {
+                AlarmManagerScript alarmScript = alarmManager.GetComponent<AlarmManagerScript>();
+                alarmScript.ActivateAlarm();
+            }
+        }
     }
 
     private void Start()
     {
         playerInput = GetComponent<PlayerInput>();
+
     }
 
-
-    public void Update()
-    {
-        Debug.Log("alarm test is " + alarmTest);
-       if (alarmTest)
-        {
-            AddListener();
-        }
-       else if (!alarmTest)
-        {
-            RemoveListener();
-        }
-    }
-
-    void AddListener()
-    {
-        onEventTriggered -= alarmActive;
-        onEventTriggered += alarmActive;
-
-        onEventTriggered?.Invoke();
-    }
-    private void RemoveListener()
-    {
-        onEventTriggered -= alarmActive;
-    }
-
-    public void alarmActive()
-    {
-        Debug.Log("alarm active function is triggered");
-    }
+   
 }
