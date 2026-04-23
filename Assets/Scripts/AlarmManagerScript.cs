@@ -2,7 +2,11 @@ using UnityEngine;
 
 public class AlarmManagerScript : MonoBehaviour
 {
-    
+    #region Script References
+    // example script reference
+    //public EventAlarm EA;
+    #endregion
+
     public bool isAlarmActive;
     public bool isAlarmTriggered;
 
@@ -29,10 +33,6 @@ public class AlarmManagerScript : MonoBehaviour
         get { return instance; }
     }
     
-    public void ActivateAlarm()
-    {
-        isAlarmActive = true;
-    }
 
     public void TriggerAlarm()
     {
@@ -41,8 +41,8 @@ public class AlarmManagerScript : MonoBehaviour
             isAlarmTriggered = true;
             AddListener();
             Debug.Log("Alarm triggered");
+            onAlarmTriggered.Invoke();
         }
-
     }
     public void DeactivateAlarm()
     {
@@ -53,11 +53,28 @@ public class AlarmManagerScript : MonoBehaviour
 
     public void AddListener()
     {
-
+        // example of adding listener (with redundency)
+        /*if (EA != null)
+        {
+            onAlarmTriggered -= EA.TestEventAlarm;
+            onAlarmTriggered += EA.TestEventAlarm; (only this line is NECESSARY, but the other code is to avoid breaking things)
+        }
+        else
+        {
+            Debug.Log("Script is Null");
+        }*/
     }
 
     public void RemoveListener()
     {
-
+        // example of removing listener (with redundency)
+        /*if (EA != null)
+        {
+            onAlarmTriggered -= EA.TestEventAlarm; (only this line is NECESSARY, but the other code is to avoid breaking things)
+        }
+        else
+        {
+            Debug.Log("Script is Null");
+        }*/
     }
 }

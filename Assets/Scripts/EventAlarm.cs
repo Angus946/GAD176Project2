@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -5,10 +6,11 @@ using UnityEngine.InputSystem;
 public class EventAlarm : MonoBehaviour
 {
 
-   public GameObject alarmManager;
+   public AlarmManagerScript alarmManager;
 
 
-    PlayerInput playerInput;
+    // Debug system for manually activating the alarm from seperate class
+   /* PlayerInput playerInput;
     public bool alarmTest;
     protected void OnAlarmTest(InputValue value)
     {
@@ -19,28 +21,33 @@ public class EventAlarm : MonoBehaviour
         {
             alarmTest = !value.isPressed;
         }
+    }*/
+
+    // this function sets the alarm active bool, and calls the trigger alarm function
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.gameObject.tag + " has entered the trigger zone");
+        if (alarmManager != null && other.CompareTag("Player"))
+        {
+            alarmManager.isAlarmActive = true;
+            alarmManager.TriggerAlarm();
+        }
+        
+
     }
 
-    public void OnCollisionEnter(Collision collision)
+    // this void calls for the deactivate alarm function when the player exits the trigger zone
+    public void OnTriggerExit(Collider other)
     {
-
-        Debug.Log(collision.collider.tag + " entered collider");
-       if (collision.collider.CompareTag("Player") == true)
+        Debug.Log(other.gameObject.tag + " has exited the trigger zone");
+        if (alarmManager != null && other.CompareTag("Player"))
         {
-            Debug.Log("player is in alarm zone");
-            if (alarmManager != null)
-            {
-                AlarmManagerScript alarmScript = alarmManager.GetComponent<AlarmManagerScript>();
-                alarmScript.ActivateAlarm();
-            }
+           alarmManager.DeactivateAlarm();
         }
     }
 
-    private void Start()
+    public void TestEventAlarm()
     {
-        playerInput = GetComponent<PlayerInput>();
-
+        Debug.Log("the alarm event has occured");
     }
-
-   
 }
