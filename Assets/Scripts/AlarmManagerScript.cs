@@ -8,14 +8,17 @@ public class AlarmManagerScript : MonoBehaviour
     public LaserScript LaserScript;
     #endregion
 
+    // set alarm bools
     public bool isAlarmActive;
     public bool isAlarmTriggered;
 
+    // set delegate event
     public delegate void AlarmDelegate();
     public AlarmDelegate onAlarmTriggered;
 
     private static AlarmManagerScript instance;
 
+    // make the manager a singleton
     private void Awake()
     {
         if (instance == null)
@@ -34,17 +37,23 @@ public class AlarmManagerScript : MonoBehaviour
         get { return instance; }
     }
     
-
+    // Trigger alarm function
     public void TriggerAlarm()
     {
         if (isAlarmActive)
         {
+            // set alarm triggered bool
             isAlarmTriggered = true;
+
+            // call the add listener script
             AddListener();
+
+            // debugging
             Debug.Log("Alarm triggered");
             onAlarmTriggered?.Invoke();
         }
     }
+    // deactivate alarm function
     public void DeactivateAlarm()
     {
         isAlarmActive = false;
@@ -52,6 +61,7 @@ public class AlarmManagerScript : MonoBehaviour
         RemoveListener();
     }
 
+    // add listener function
     public void AddListener()
     {
         // example of adding listener
@@ -72,6 +82,7 @@ public class AlarmManagerScript : MonoBehaviour
         }
     }
 
+    // remove listener function
     public void RemoveListener()
     {
         // example of removing listener (with redundency)
