@@ -5,6 +5,7 @@ public class AlarmManagerScript : MonoBehaviour
     #region Script References
     // example script reference
     //public EventAlarm EA;
+    public LaserScript LaserScript;
     #endregion
 
     public bool isAlarmActive;
@@ -41,7 +42,7 @@ public class AlarmManagerScript : MonoBehaviour
             isAlarmTriggered = true;
             AddListener();
             Debug.Log("Alarm triggered");
-            onAlarmTriggered.Invoke();
+            onAlarmTriggered?.Invoke();
         }
     }
     public void DeactivateAlarm()
@@ -53,7 +54,7 @@ public class AlarmManagerScript : MonoBehaviour
 
     public void AddListener()
     {
-        // example of adding listener (with redundency)
+        // example of adding listener
         /*if (EA != null)
         {
             onAlarmTriggered -= EA.TestEventAlarm;
@@ -63,6 +64,12 @@ public class AlarmManagerScript : MonoBehaviour
         {
             Debug.Log("Script is Null");
         }*/
+
+        if (LaserScript  != null)
+        {
+            onAlarmTriggered -= LaserScript.AlarmTest;
+            onAlarmTriggered += LaserScript.AlarmTest;
+        }
     }
 
     public void RemoveListener()
@@ -76,5 +83,10 @@ public class AlarmManagerScript : MonoBehaviour
         {
             Debug.Log("Script is Null");
         }*/
+
+        if (LaserScript != null)
+        {
+            onAlarmTriggered -= LaserScript.AlarmTest;
+        }
     }
 }

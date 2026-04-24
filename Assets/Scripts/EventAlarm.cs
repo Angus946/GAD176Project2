@@ -24,7 +24,7 @@ public class EventAlarm : MonoBehaviour
     }*/
 
     // this function sets the alarm active bool, and calls the trigger alarm function
-    void OnTriggerEnter(Collider other)
+    /*void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.gameObject.tag + " has entered the trigger zone");
         if (alarmManager != null && other.CompareTag("Player"))
@@ -49,5 +49,5 @@ public class EventAlarm : MonoBehaviour
     public void TestEventAlarm()
     {
         Debug.Log("the alarm event has occured");
-    }
+    }*/
 }
