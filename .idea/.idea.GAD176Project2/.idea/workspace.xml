@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e60dd3d-3357-4cbb-910b-3d585f0a80e3" name="Changes" comment="" />
+    <list default="true" id="8e60dd3d-3357-4cbb-910b-3d585f0a80e3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GAD176Project2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GAD176Project2/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,7 +15,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/kye/Enemy" />
+        <entry key="$PROJECT_DIR$" value="develop" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -45,7 +47,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "feature/kye/deployabledrone",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -106,6 +108,7 @@
       <workItem from="1777174581762" duration="101000" />
       <workItem from="1777174772270" duration="67000" />
       <workItem from="1777174896619" duration="255000" />
+      <workItem from="1777175187377" duration="1275000" />
     </task>
     <task id="LOCAL-00001" summary="commit base enemy and 3 enemyies created I forgot to commit previous changeges, will be done with this feature once I have a working demo">
       <option name="closed" value="true" />
@@ -123,7 +126,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777174141511</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="unversiond files befor merging feature">
+      <option name="closed" value="true" />
+      <created>1777175341572</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1777175341572</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -137,11 +148,23 @@
     <option name="unityProjectFolder" value="true" />
   </component>
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="commit base enemy and 3 enemyies created I forgot to commit previous changeges, will be done with this feature once I have a working demo" />
     <MESSAGE value="set up enemy demo ready to move to next feature" />
-    <option name="LAST_COMMIT_MESSAGE" value="set up enemy demo ready to move to next feature" />
+    <MESSAGE value="unversiond files befor merging feature" />
+    <option name="LAST_COMMIT_MESSAGE" value="unversiond files befor merging feature" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
