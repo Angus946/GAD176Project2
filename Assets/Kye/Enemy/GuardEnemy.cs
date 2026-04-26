@@ -23,16 +23,9 @@ namespace Kye.StealthGame.Enemies
         [Header("Guard — Attack")]
         [SerializeField] private float attackRadius     = 2f;   // melee range to trigger alert
         [SerializeField] private float attackCooldown   = 3f;   // seconds between alert pulses
-
-        // ─────────────────────────────────────────────
-        // PRIVATE STATE
-        // ─────────────────────────────────────────────
+        
 
         private float attackTimer = 0f;
-
-        // ─────────────────────────────────────────────
-        // UNITY LIFECYCLE  (override)
-        // ─────────────────────────────────────────────
 
         protected override void Awake()
         {
@@ -51,10 +44,7 @@ namespace Kye.StealthGame.Enemies
                 attackTimer -= Time.deltaTime;
         }
 
-        // ─────────────────────────────────────────────
-        // VIRTUAL OVERRIDES
-        // ─────────────────────────────────────────────
-
+        
         /// <summary>
         /// When a Guard spots the player, it immediately broadcasts an alert
         /// to all nearby Guards and K9s before transitioning to Chase.
@@ -78,7 +68,6 @@ namespace Kye.StealthGame.Enemies
         /// Guard attack: if the player is within melee range, pulse another alert
         /// to nearby allies and nudge them into Chase state.
         /// </summary>
-        /// <param name="distanceToPlayer">Current distance from this guard to the player.</param>
         protected override void PerformAttackCheck(float distanceToPlayer)
         {
             if (distanceToPlayer > attackRadius) return;
@@ -88,11 +77,7 @@ namespace Kye.StealthGame.Enemies
             BroadcastAlertToNearbyEnemies();
             attackTimer = attackCooldown;
         }
-
-        // ─────────────────────────────────────────────
-        // PRIVATE HELPERS
-        // ─────────────────────────────────────────────
-
+        
         /// <summary>
         /// Uses an OverlapSphere to find all enemy GameObjects within alertCallRadius,
         /// then forces each GuardEnemy and K9Enemy into Chase state.
@@ -127,10 +112,7 @@ namespace Kye.StealthGame.Enemies
                 }
             }
         }
-
-        // ─────────────────────────────────────────────
-        // GIZMOS
-        // ─────────────────────────────────────────────
+        
 
         protected override void OnDrawGizmosSelected()
         {

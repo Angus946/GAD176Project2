@@ -10,9 +10,7 @@ namespace Kye.StealthGame.Player
     /// </summary>
     public class PlayerDroneDeployer : MonoBehaviour
     {
-        // ─────────────────────────────────────────────
-        // SERIALIZED FIELDS
-        // ─────────────────────────────────────────────
+     
 
         [Header("Drone Setup")]
         [SerializeField] private GameObject dronePrefab;           // assign your drone primitive in inspector
@@ -30,19 +28,13 @@ namespace Kye.StealthGame.Player
 
         [Header("Input")]
         // Deploy = Left Mouse Button, Recall = Keyboard 2
-
-        // ─────────────────────────────────────────────
-        // PRIVATE STATE
-        // ─────────────────────────────────────────────
+        
 
         private GameObject      activeDrone     = null;
         private ScoutDrone      droneController = null;
         private bool            isInDroneMode   = false;
         private Coroutine       rangeCoroutine  = null;
-
-        // ─────────────────────────────────────────────
-        // UNITY LIFECYCLE
-        // ─────────────────────────────────────────────
+        
 
         private void Start()
         {
@@ -62,10 +54,7 @@ namespace Kye.StealthGame.Player
             HandleDeployInput();
             HandleRecallInput();
         }
-
-        // ─────────────────────────────────────────────
-        // INPUT HANDLING
-        // ─────────────────────────────────────────────
+        
 
         /// <summary>Listens for the deploy key. Only throws if no drone is currently active.</summary>
         private void HandleDeployInput()
@@ -85,9 +74,6 @@ namespace Kye.StealthGame.Player
                 RecallDrone();
         }
 
-        // ─────────────────────────────────────────────
-        // DEPLOY
-        // ─────────────────────────────────────────────
 
         /// <summary>
         /// Spawns the drone at the throw origin and launches it with a physics arc.
@@ -154,10 +140,7 @@ namespace Kye.StealthGame.Player
             PossessDrone();
         }
 
-        // ─────────────────────────────────────────────
-        // POSSESSION
-        // ─────────────────────────────────────────────
-
+  
         /// <summary>
         /// Switches camera control to the drone and enables drone movement.
         /// Disables the player camera and enables the drone camera.
@@ -200,10 +183,6 @@ namespace Kye.StealthGame.Player
             Debug.Log("[PlayerDroneDeployer] Now inhabiting drone.");
         }
 
-        // ─────────────────────────────────────────────
-        // RANGE MONITORING  (overlap sphere)
-        // ─────────────────────────────────────────────
-
         /// <summary>
         /// Periodically checks if the player is within the drone's max range
         /// using an OverlapSphere centred on the drone.
@@ -236,10 +215,7 @@ namespace Kye.StealthGame.Player
                 }
             }
         }
-
-        // ─────────────────────────────────────────────
-        // RECALL
-        // ─────────────────────────────────────────────
+        
 
         /// <summary>
         /// Returns camera control to the player and destroys the active drone.
@@ -270,9 +246,7 @@ namespace Kye.StealthGame.Player
             Debug.Log("[PlayerDroneDeployer] Returned to player.");
         }
 
-        // ─────────────────────────────────────────────
-        // GIZMOS
-        // ─────────────────────────────────────────────
+     
 
         private void OnDrawGizmosSelected()
         {
