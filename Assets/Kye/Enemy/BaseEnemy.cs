@@ -7,15 +7,10 @@ namespace Kye.StealthGame.Enemies
     /// <summary>
     /// Abstract base class for all enemy types in the stealth game.
     /// Provides shared state machine logic, physics movement, and detection systems.
-    /// Derived classes must implement attack behaviour and can override detection responses.
     /// </summary>
     public abstract class BaseEnemy : MonoBehaviour
     {
-        // ─────────────────────────────────────────────
-        // ENUMS
-        // ─────────────────────────────────────────────
-
-        /// <summary>All possible states in the enemy's AI state machine.</summary>
+        //All possible states in the enemy's AI state machine.</summary>
         public enum EnemyState
         {
             Patrol,
@@ -59,10 +54,6 @@ namespace Kye.StealthGame.Enemies
         private   float       alertTimer       = 0f;
         private   Vector3     lastKnownPosition;
 
-        // ─────────────────────────────────────────────
-        // UNITY LIFECYCLE
-        // ─────────────────────────────────────────────
-
         protected virtual void Awake()
         {
             rb = GetComponent<Rigidbody>();
@@ -95,10 +86,7 @@ namespace Kye.StealthGame.Enemies
         {
             RunStateMachine();
         }
-
-        // ─────────────────────────────────────────────
-        // STATE MACHINE  (public read, private drive)
-        // ─────────────────────────────────────────────
+        
 
         /// <summary>Returns the enemy's current AI state (read-only externally).</summary>
         public EnemyState CurrentState => currentState;
@@ -142,10 +130,7 @@ namespace Kye.StealthGame.Enemies
                     break;
             }
         }
-
-        // ─────────────────────────────────────────────
-        // STATE UPDATES
-        // ─────────────────────────────────────────────
+        
 
         private void UpdatePatrol()
         {
@@ -193,7 +178,7 @@ namespace Kye.StealthGame.Enemies
             // Update last known position while chasing
             lastKnownPosition = playerTransform.position;
 
-            PerformAttackCheck(distToPlayer);   // abstract — derived class decides attack range/logic
+            PerformAttackCheck(distToPlayer);   // abstract derived class decides attack range/logic
 
             if (!CanSeePlayer())
                 EnterState(EnemyState.Search);
@@ -228,10 +213,7 @@ namespace Kye.StealthGame.Enemies
             if (searchTimer <= 0f)
                 EnterState(EnemyState.Patrol);
         }
-
-        // ─────────────────────────────────────────────
-        // DETECTION — LINE OF SIGHT  (raycasting)
-        // ─────────────────────────────────────────────
+        
 
         /// <summary>
         /// Returns true if the enemy has unobstructed line-of-sight to the player.
@@ -247,7 +229,7 @@ namespace Kye.StealthGame.Enemies
 
             if (distance > sightRange) return false;
 
-            // Angle check using dot product — avoids an expensive Acos when possible
+            // Angle check using dot product 
             // dot = cos(angle) for unit vectors; compare against cos(sightAngle)
             float   dot             = Vector3.Dot(transform.forward, toPlayer.normalized);
             float   cosHalfAngle    = Mathf.Cos(sightAngle * Mathf.Deg2Rad);   // angle conversion
@@ -264,10 +246,6 @@ namespace Kye.StealthGame.Enemies
 
             return true;
         }
-
-        // ─────────────────────────────────────────────
-        // PHYSICS MOVEMENT  (Rigidbody — velocity + forces)
-        // ─────────────────────────────────────────────
 
         /// <summary>Moves the enemy in a given world-space direction at a given speed using Rigidbody velocity.</summary>
         protected void MoveInDirection(Vector3 direction, float speed)
@@ -312,10 +290,7 @@ namespace Kye.StealthGame.Enemies
                                             targetRotation,
                                             rotationSpeed * Time.deltaTime);
         }
-
-        // ─────────────────────────────────────────────
-        // PATROL MOVEMENT
-        // ─────────────────────────────────────────────
+        
 
         private void MoveAlongPatrolRoute()
         {
@@ -343,11 +318,7 @@ namespace Kye.StealthGame.Enemies
         {
             patrolIndex = (patrolIndex + 1) % patrolPoints.Length;
         }
-
-        // ─────────────────────────────────────────────
-        // VIRTUAL / ABSTRACT HOOKS  (OOP — inheritance + overriding)
-        // ─────────────────────────────────────────────
-
+        
         /// <summary>
         /// Called when the enemy enters the Alert state.
         /// Override in derived classes to add type-specific alert behaviour
@@ -368,9 +339,7 @@ namespace Kye.StealthGame.Enemies
         /// <param name="distanceToPlayer">Current distance from enemy to player.</param>
         protected abstract void PerformAttackCheck(float distanceToPlayer);
 
-        // ─────────────────────────────────────────────
-        // PUBLIC UTILITY
-        // ─────────────────────────────────────────────
+ 
 
         /// <summary>Forces the enemy into a specific state (e.g. from a GameManager event).</summary>
         public void ForceState(EnemyState state) => EnterState(state);
@@ -383,10 +352,7 @@ namespace Kye.StealthGame.Enemies
             Vector3 diff = playerTransform.position - transform.position;   // vector subtraction
             return diff.sqrMagnitude;
         }
-
-        // ─────────────────────────────────────────────
-        // GIZMOS  (editor visualisation)
-        // ─────────────────────────────────────────────
+        
 
         protected virtual void OnDrawGizmosSelected()
         {

@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e60dd3d-3357-4cbb-910b-3d585f0a80e3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/DeployableDrone.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Kye/DeployableDrone.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DeployableDrone/Drone.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Kye/DeployableDrone/Drone.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DeployableDrone/Drone.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Kye/DeployableDrone/Drone.prefab.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DeployableDrone/Scripts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Kye/DeployableDrone/Scripts.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DeployableDrone/Scripts/PlayerDroneDeployer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Kye/DeployableDrone/Scripts/PlayerDroneDeployer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DeployableDrone/Scripts/PlayerDroneDeployer.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Kye/DeployableDrone/Scripts/PlayerDroneDeployer.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DeployableDrone/Scripts/ScoutDrone.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Kye/DeployableDrone/Scripts/ScoutDrone.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DeployableDrone/Scripts/ScoutDrone.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Kye/DeployableDrone/Scripts/ScoutDrone.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GAD176Project2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GAD176Project2/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kye/DeployableDrone/Scripts/PlayerDroneDeployer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Kye/DeployableDrone/Scripts/PlayerDroneDeployer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kye/DeployableDrone/Scripts/ScoutDrone.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Kye/DeployableDrone/Scripts/ScoutDrone.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kye/Enemy/BaseEnemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Kye/Enemy/BaseEnemy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kye/Enemy/GuardEnemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Kye/Enemy/GuardEnemy.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +44,9 @@
     &quot;accountId&quot;: &quot;1808f2c0-d944-4da6-8709-e1f5cdddd244&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Kye/Enemy/BaseEnemy.cs.meta" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
@@ -149,7 +149,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777175341572</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="file organisation after merge, will continue final fixes in develop.">
+      <option name="closed" value="true" />
+      <created>1777184064771</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1777184064771</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -179,7 +187,8 @@
     <MESSAGE value="commit base enemy and 3 enemyies created I forgot to commit previous changeges, will be done with this feature once I have a working demo" />
     <MESSAGE value="set up enemy demo ready to move to next feature" />
     <MESSAGE value="unversiond files befor merging feature" />
-    <option name="LAST_COMMIT_MESSAGE" value="unversiond files befor merging feature" />
+    <MESSAGE value="file organisation after merge, will continue final fixes in develop." />
+    <option name="LAST_COMMIT_MESSAGE" value="file organisation after merge, will continue final fixes in develop." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

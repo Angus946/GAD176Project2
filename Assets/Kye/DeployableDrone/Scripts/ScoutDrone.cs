@@ -3,17 +3,9 @@ using UnityEngine.InputSystem;
 
 namespace Kye.StealthGame.Player
 {
-    /// <summary>
-    /// Attached to the scout drone GameObject.
-    /// Handles acceleration-based ground movement relative to the drone's camera facing direction.
-    /// The drone feels like it's on wheels — it builds up speed and slides to a stop.
-    /// Enemies cannot detect this drone.
-    /// </summary>
+
     public class ScoutDrone : MonoBehaviour
     {
-        // ─────────────────────────────────────────────
-        // SERIALIZED FIELDS
-        // ─────────────────────────────────────────────
 
         [Header("Movement")]
         [SerializeField] private float accelerationRate    = 10f;  // units per second squared
@@ -26,17 +18,10 @@ namespace Kye.StealthGame.Player
         [Header("Camera")]
         [SerializeField] private Transform droneCamera;            // first person camera on drone
 
-        // ─────────────────────────────────────────────
-        // PRIVATE STATE
-        // ─────────────────────────────────────────────
-
         private Rigidbody   rb;
         private Vector3     currentVelocity = Vector3.zero;    // tracked manually for acceleration
         private bool        isControllable  = false;
 
-        // ─────────────────────────────────────────────
-        // UNITY LIFECYCLE
-        // ─────────────────────────────────────────────
 
         private void Awake()
         {
@@ -66,11 +51,7 @@ namespace Kye.StealthGame.Player
             if (!isControllable) return;
             HandleAccelerationMovement();
         }
-
-        // ─────────────────────────────────────────────
-        // MOVEMENT  (acceleration + vector addition)
-        // ─────────────────────────────────────────────
-
+        
         /// <summary>
         /// Moves the drone using acceleration rather than direct velocity assignment.
         /// Input direction is relative to the drone camera's facing direction.
@@ -150,16 +131,12 @@ namespace Kye.StealthGame.Player
             float turnAmount = mouseX * turnSpeed * Time.deltaTime;
             transform.Rotate(Vector3.up, turnAmount);
         }
-
-        // ─────────────────────────────────────────────
-        // PUBLIC API
-        // ─────────────────────────────────────────────
+        
 
         /// <summary>
         /// Enables or disables player control of the drone.
         /// Called by PlayerDroneDeployer when possession switches.
         /// </summary>
-        /// <param name="controllable">True to allow input, false to lock.</param>
         public void SetControllable(bool controllable)
         {
             isControllable = controllable;
